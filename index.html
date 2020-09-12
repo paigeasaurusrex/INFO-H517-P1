@@ -37,6 +37,7 @@
             //console.log(data);
             var i = 0;
             for (i = 0; i < data.length; i++) {
+
                 map.append('circle')
                     .attr('cx', data[i].x * scale)
                     .attr('cy', data[i].y * scale)
@@ -59,9 +60,10 @@
             return (died);
         });
         d3.csv("data/deaths_age_sex.csv", function (data) {
-            //console.log(data);
+            console.log(data);
             for (d = 0; d < died; d++) {
                 //console.log('you are here: ' + died);
+                //if (data[d].gender)
                 map.append('circle')
                     .attr('cx', data[d].x * scale)
                     .attr('cy', data[d].y * scale)
@@ -69,7 +71,10 @@
                     .attr('fill', 'red');
             }
 
-        });</script>
+        });
+        // if gender checkbox is checked, change the colors of the death circles
+        //d3.selectAll('.checkbox').each(function(d){})
+    </script>
 
 </body>
 </html>
