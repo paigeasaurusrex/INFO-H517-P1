@@ -63,12 +63,22 @@
             console.log(data);
             for (d = 0; d < died; d++) {
                 //console.log('you are here: ' + died);
-                //if (data[d].gender)
-                map.append('circle')
+                if (Number(data[d].gender) == 1) {
+                    map.append('circle')
                     .attr('cx', data[d].x * scale)
                     .attr('cy', data[d].y * scale)
                     .attr('r', '2')
-                    .attr('fill', 'red');
+                    .attr('fill', 'red')
+                    .attr('class', 'female');
+                }
+                else {
+                    map.append('circle')
+                    .attr('cx', data[d].x * scale)
+                    .attr('cy', data[d].y * scale)
+                    .attr('r', '2')
+                    .attr('fill', 'red')
+                    .attr('class', 'male');
+                }
             }
 
         });
