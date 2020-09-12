@@ -12,13 +12,20 @@
         d3.json("data/streets.json", function(data) {
             console.log(data);
             const map = d3.select('#map');
-            map.append('line')
-                .style('stroke', 'black')
-                .style('stroke-width', '2')
-                .attr('x1', 0)
-                .attr('x2', 200)
-                .attr('y1', 0)
-                .attr('y2', 200);
+            var a;
+            var b;
+            for (a = 0; a < data.length; a++) {
+                for (b = 0; b < a.length-1; b++) {
+                    map.append('line')
+                        .style('stroke', 'black')
+                        .style('stroke-width', '2')
+                        .attr('x1', a[b].x*10)
+                        .attr('x2', a[b+1].x*10)
+                        .attr('y1', a[b].y*10)
+                        .attr('y2', a[b+1].y*10);
+                    console.log(a[b].x)
+                }
+            }
         });
     </script>
     
