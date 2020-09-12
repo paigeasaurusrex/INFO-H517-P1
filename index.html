@@ -9,9 +9,10 @@
     <h1>Map</h1>
     <svg id="map" style="margin: 0 auto; display: block;" width="1000" height="1000"></svg>
     <script type="text/javascript">
+    const map = d3.select('#map');
     d3.json("data/streets.json", function (data) {
         //console.log(data);
-        const map = d3.select('#map');
+        
         var a;
         var b;
         var l;
