@@ -53,12 +53,13 @@
             deaths += Number(data[d].deaths);
             console.log(deaths);
         }
-
+        return(deaths);
     });
     console.log('deaths to show: ' + deaths);
     d3.csv("data/deaths_age_sex.csv", function (data) {
         console.log(data);
         for (d = 0; d < deaths; d++) {
+            console.log('you are here' + deaths);
             map.append('circle')
                 .attr('cx', data[d].x*scale)
                 .attr('cy', data[d].y*scale)
