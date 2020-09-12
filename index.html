@@ -10,13 +10,12 @@
     <svg id="map" style="margin: 0 auto; display: block;" width="1000" height="1000"></svg>
     <script type="text/javascript">
     const map = d3.select('#map');
+    var scale = 40.0;
     d3.json("data/streets.json", function (data) {
-        //console.log(data);
-        
+        //console.log(data)
         var a;
         var b;
         var l;
-        var scale = 40.0;
         for (a = 0; a < data.length; a++) {
             l = data[a];
             for (b = 0; b < l.length - 1; b++) {
