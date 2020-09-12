@@ -8,8 +8,8 @@
 <body>
     <h1>Map</h1>
     <div>
-        <input type="checkbox" class="checkbox" value="gender" unchecked><label>Gender</label>
-        <input type="checkbox" class="checkbox" value="age" unchecked><label>Age</label>
+        <input type="checkbox" class="checkbox" id="gender" value="gender" unchecked><label>Gender</label>
+        <input type="checkbox" class="checkbox" id="age" value="age" unchecked><label>Age</label>
     </div>
     <svg id="map" style="margin: 0 auto; display: block;" width="1000" height="1000"></svg>
     <script type="text/javascript">const map = d3.select('#map');
@@ -76,14 +76,22 @@
                     .attr('cx', data[d].x * scale)
                     .attr('cy', data[d].y * scale)
                     .attr('r', '2')
-                    .attr('fill', 'blue')
+                    .attr('fill', 'red')
                     .attr('class', 'male');
                 }
             }
 
         });
         // if gender checkbox is checked, change the colors of the death circles
-        //d3.selectAll('.checkbox').each(function(d){})
+        temp = d3.select('#gender');
+        if (temp.property("checked"){
+            console.log("checked");
+        }
+        else {
+            console.log("unchecked");
+        }
+            //d3.selectAll(“.male”).attr('fill', 'blue')
+        })
     </script>
 
 </body>
