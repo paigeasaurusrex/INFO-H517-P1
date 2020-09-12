@@ -19,7 +19,6 @@
             for (a = 0; a < data.length; a++) {
                 l = data[a];
                 for (b = 0; b < l.length-1; b++) {
-                    console.log(l);
                     map.append('line')
                         .style('stroke', 'black')
                         .style('stroke-width', '2')
@@ -27,7 +26,6 @@
                         .attr('x2', l[b+1].x*scale)
                         .attr('y1', l[b].y*scale)
                         .attr('y2', l[b+1].y*scale);
-                    console.log(l[b].x);
                 }
             }
         });
