@@ -8,8 +8,7 @@
 <body>
     <h1>Map</h1>
     <svg id="map" style="margin: 0 auto; display: block;" width="1000" height="1000"></svg>
-    <script type="text/javascript">
-        d3.json("data/streets.json", function(data) {
+    <script type="text/javascript">d3.json("data/streets.json", function (data) {
             //console.log(data);
             const map = d3.select('#map');
             var a;
@@ -18,20 +17,24 @@
             var scale = 40.0;
             for (a = 0; a < data.length; a++) {
                 l = data[a];
-                for (b = 0; b < l.length-1; b++) {
+                for (b = 0; b < l.length - 1; b++) {
                     map.append('line')
                         .style('stroke', 'black')
                         .style('stroke-width', '2')
-                        .attr('x1', l[b].x*scale)
-                        .attr('x2', l[b+1].x*scale)
-                        .attr('y1', l[b].y*scale)
-                        .attr('y2', l[b+1].y*scale);
+                        .attr('x1', l[b].x * scale)
+                        .attr('x2', l[b + 1].x * scale)
+                        .attr('y1', l[b].y * scale)
+                        .attr('y2', l[b + 1].y * scale);
                     //console.log(l[b+1].x);
                 }
             }
         });
-
     </script>
-    
+    <script type="text/javascript">
+        d3.csv("/data/pumps.csv", function(data) {
+            console.log(data);
+        });
+    </script>
+
 </body>
 </html>
