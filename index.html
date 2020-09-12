@@ -37,7 +37,8 @@
             map.append('circle')
                 .attr('cx', data[i].x*scale)
                 .attr('cy', data[i].y*scale)
-                .attr('r', '5');
+                .attr('r', '5')
+                .arrt('fill', 'steelblue');
         }
     });</script>
     <script type="text/javascript">d3.csv("data/deathdays.csv", function (data) {
