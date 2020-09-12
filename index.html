@@ -7,67 +7,69 @@
 </head>
 <body>
     <h1>Map</h1>
+    <div>
+        <input type="checkbox" class="checkbox" value="gender" unchecked><label>Gender</label>
+        <input type="checkbox" class="checkbox" value="age" unchecked><label>Age</label>
+    </div>
     <svg id="map" style="margin: 0 auto; display: block;" width="1000" height="1000"></svg>
-    <script type="text/javascript">
-    const map = d3.select('#map');
-    var scale = 40.0;
-    d3.json("data/streets.json", function (data) {
-        //console.log(data)
-        var a;
-        var b;
-        var l;
-        for (a = 0; a < data.length; a++) {
-            l = data[a];
-            for (b = 0; b < l.length - 1; b++) {
-                map.append('line')
-                    .style('stroke', 'black')
-                    .style('stroke-width', '2')
-                    .attr('x1', l[b].x * scale)
-                    .attr('x2', l[b + 1].x * scale)
-                    .attr('y1', l[b].y * scale)
-                    .attr('y2', l[b + 1].y * scale);
+    <script type="text/javascript">const map = d3.select('#map');
+        var scale = 40.0;
+        d3.json("data/streets.json", function (data) {
+            //console.log(data)
+            var a;
+            var b;
+            var l;
+            for (a = 0; a < data.length; a++) {
+                l = data[a];
+                for (b = 0; b < l.length - 1; b++) {
+                    map.append('line')
+                        .style('stroke', 'black')
+                        .style('stroke-width', '2')
+                        .attr('x1', l[b].x * scale)
+                        .attr('x2', l[b + 1].x * scale)
+                        .attr('y1', l[b].y * scale)
+                        .attr('y2', l[b + 1].y * scale);
                     //console.log(l[b+1].x);
                 }
             }
-    });
-    d3.csv("data/pumps.csv", function (data) {
-        //console.log(data);
-        var i = 0;
-        for (i = 0; i < data.length; i++) {
-            map.append('circle')
-                .attr('cx', data[i].x*scale)
-                .attr('cy', data[i].y*scale)
-                .attr('r', '5')
-                .attr('fill', 'steelblue');
-        }
-    });
-    //slider to get ending date for showing the data
+        });
+        d3.csv("data/pumps.csv", function (data) {
+            //console.log(data);
+            var i = 0;
+            for (i = 0; i < data.length; i++) {
+                map.append('circle')
+                    .attr('cx', data[i].x * scale)
+                    .attr('cy', data[i].y * scale)
+                    .attr('r', '5')
+                    .attr('fill', 'steelblue');
+            }
+        });
+        //slider to get ending date for showing the data
 
-    var endDate = 42;
-    var died = 0;
-    //need to get a number to tell how many of the deaths to show
-    d3.csv("data/deathdays.csv", function (data) {
-        //console.log(data);
-        var d = 0;
-        for (d = 0; d < endDate; d++) {
-            died = died + Number(data[d].deaths);
-            //console.log(died);
-        }
-        return(died);
-    });
-    d3.csv("data/deaths_age_sex.csv", function (data) {
-        //console.log(data);
-        for (d = 0; d < died; d++) {
-            //console.log('you are here: ' + died);
-            map.append('circle')
-                .attr('cx', data[d].x*scale)
-                .attr('cy', data[d].y*scale)
-                .attr('r', '2')
-                .attr('fill', 'red');
-        }
+        var endDate = 42;
+        var died = 0;
+        //need to get a number to tell how many of the deaths to show
+        d3.csv("data/deathdays.csv", function (data) {
+            //console.log(data);
+            var d = 0;
+            for (d = 0; d < endDate; d++) {
+                died = died + Number(data[d].deaths);
+                //console.log(died);
+            }
+            return (died);
+        });
+        d3.csv("data/deaths_age_sex.csv", function (data) {
+            //console.log(data);
+            for (d = 0; d < died; d++) {
+                //console.log('you are here: ' + died);
+                map.append('circle')
+                    .attr('cx', data[d].x * scale)
+                    .attr('cy', data[d].y * scale)
+                    .attr('r', '2')
+                    .attr('fill', 'red');
+            }
 
-    });
-    </script>
+        });</script>
 
 </body>
 </html>
