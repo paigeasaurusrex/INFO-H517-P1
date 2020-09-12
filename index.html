@@ -31,10 +31,10 @@
                 }
             }
         });
-        d3.csv("data/pumps.csv")
-            .get(function(data) {
-                console.log(data);
-            });
+        d3.csv("data/pumps.csv", function(data) {
+            console.log(data);
+        });
+        
     </script>
     
 </body>
