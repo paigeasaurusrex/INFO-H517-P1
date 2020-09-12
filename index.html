@@ -43,27 +43,26 @@
     });
     //slider to get ending date for showing the data
 
-    var endDate = 15;
+    var endDate = 42;
     var died = 0;
     //need to get a number to tell how many of the deaths to show
     d3.csv("data/deathdays.csv", function (data) {
-        console.log(data);
+        //console.log(data);
         var d = 0;
         for (d = 0; d < endDate; d++) {
             died = died + Number(data[d].deaths);
-            console.log(died);
+            //console.log(died);
         }
         return(died);
     });
-    console.log('deaths to show: ' + died);
     d3.csv("data/deaths_age_sex.csv", function (data) {
-        console.log(data);
+        //console.log(data);
         for (d = 0; d < died; d++) {
-            console.log('you are here: ' + died);
+            //console.log('you are here: ' + died);
             map.append('circle')
                 .attr('cx', data[d].x*scale)
                 .attr('cy', data[d].y*scale)
-                .attr('r', '5')
+                .attr('r', '2')
                 .attr('fill', 'red');
         }
 
