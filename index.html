@@ -43,23 +43,23 @@
     });
     //slider to get ending date for showing the data
 
-    var endDate = 10;
-    var deaths = 0;
+    var endDate = 15;
+    var died = 0;
     //need to get a number to tell how many of the deaths to show
     d3.csv("data/deathdays.csv", function (data) {
         console.log(data);
         var d = 0;
         for (d = 0; d < endDate; d++) {
-            deaths += Number(data[d].deaths);
-            console.log(deaths);
+            died = died + Number(data[d].deaths);
+            console.log(died);
         }
-        return(deaths);
+        return(died);
     });
-    console.log('deaths to show: ' + deaths);
+    console.log('deaths to show: ' + died);
     d3.csv("data/deaths_age_sex.csv", function (data) {
         console.log(data);
-        for (d = 0; d < deaths; d++) {
-            console.log('you are here' + deaths);
+        for (d = 0; d < died; d++) {
+            console.log('you are here: ' + died);
             map.append('circle')
                 .attr('cx', data[d].x*scale)
                 .attr('cy', data[d].y*scale)
