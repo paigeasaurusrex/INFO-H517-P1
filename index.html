@@ -91,6 +91,7 @@
             }
             else {
                 console.log("unchecked");
+                map.selectAll(".male").attr('fill', 'red');
             }
         }
         d3.select("#gender").on("change",update);
