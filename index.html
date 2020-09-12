@@ -9,8 +9,7 @@
     <h1>Map</h1>
     <svg id="map" style="margin: 0 auto; display: block;" width="200" height="300"></svg>
     <script type="text/javascript">
-        d3.json("data/streets.json", function(data) {
-            console.log(data);
+        d3.json("data/streets.json", function(data) {}
             const map = d3.select('#map');
             var a;
             var b;
@@ -23,7 +22,7 @@
                         .attr('x2', a[b+1].x*10)
                         .attr('y1', a[b].y*10)
                         .attr('y2', a[b+1].y*10);
-                    console.log(a[b].x)
+                    console.log(a[b].x);
                 }
             }
         });
