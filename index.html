@@ -15,6 +15,7 @@
             var a;
             var b;
             var l;
+            var scale = 40;
             for (a = 0; a < data.length; a++) {
                 l = data[a];
                 for (b = 0; b < l.length-1; b++) {
@@ -22,14 +23,18 @@
                     map.append('line')
                         .style('stroke', 'black')
                         .style('stroke-width', '2')
-                        .attr('x1', l[b].x*40)
-                        .attr('x2', l[b+1].x*40)
-                        .attr('y1', l[b].y*40)
-                        .attr('y2', l[b+1].y*40);
+                        .attr('x1', l[b].x*scale)
+                        .attr('x2', l[b+1].x*scale)
+                        .attr('y1', l[b].y*scale)
+                        .attr('y2', l[b+1].y*scale);
                     console.log(l[b].x);
                 }
             }
         });
+        d3.csv("/data/pumps.csv")
+            .get(function(data) {
+                console.log(data);
+            });
     </script>
     
 </body>
