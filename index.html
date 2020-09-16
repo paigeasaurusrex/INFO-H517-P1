@@ -95,8 +95,8 @@ For an A you need to add:
             for (i = 0; i < data.length; i++) {
 
                 map.append('circle')
-                    .attr('cx', data[i].x * scale)
-                    .attr('cy', data[i].y * scale)
+                    .attr('cx', (data[i].x-xmin) * scale)
+                    .attr('cy', (data[i].y-ymin) * scale)
                     .attr('r', '5')
                     .attr('fill', 'steelblue');
             }
@@ -111,14 +111,14 @@ For an A you need to add:
         d3.csv("data/deathdays.csv", function (data) {
             //console.log(data);
             // For the slider attr: min="10" max="100" value="50";
-            var chartScale = imgWidth / data.length;
+            var chartScale = (xmax-xmin) / data.length;
             var w = chartScale - barPad;
             var d = 0;
             for (d = 0; d < endDate; d++) {
                 chart.append('rect')
                     .attr('x', d * (w + barPad))
-                    .attr('y', (chartHeight - data[d].deaths))
-                    .attr('height', data[d].deaths)
+                    .attr('y', (chartHeight - data[d].deaths*2))
+                    .attr('height', data[d].deaths*2)
                     .attr('width', w)
                     .attr('fill', 'steelblue');
                 console.log(chartHeight - data[d].deaths);
