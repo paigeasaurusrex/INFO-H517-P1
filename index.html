@@ -5,6 +5,30 @@
     <script src="https://d3js.org/d3.v3.min.js"></script>
     <title></title>
 </head>
+<!--
+    color brewer (for color picking)
+For a C you need:
+
+X: A well drawn map of the area (streets and pumps) including the locations of the deaths
+   a timeline graph showing the number of deaths per day
+   ability to move the mouse over the timeline graph to choose which day to visualize - this should affect the deaths visible on the map and in the graph - at minimum all cholera deaths prior to that date should be shown on the map and the graph
+   the graph and the map should be stable (i.e., they should not move when new data is added or removed)
+   the graph and the map should be well labeled
+   you should check your visualization with a color blindness simulation tool to see that its OK
+   the map and graph should update quickly when the user interacts
+   an about screen with details on who wrote the project, where the data came from, etc.
+For a B you need to add:
+
+more data to the map - major street names and the location of the brewery and the work house
+ability to easily see on the map whether each victim was male or female
+ability to easily see on the map the age of each victim
+additional graphs showing the distribution of deaths by sex and age overall
+For an A you need to add:
+
+ability to cluster the data on the map into a grid that shows the number of dead in each grid cell (even with this small amount of data the points are starting to overwhelm) and the user should be able to vary the size of the clusters.
+ability to show data from a window of days on the timeline graph
+ability to zoom in/out and pan around the map
+-->
 <body>
     <h1>Map</h1>
     <div>
@@ -12,16 +36,17 @@
         <input type="checkbox" class="checkbox" id="age" value="age" unchecked><label>Age</label>
     </div>
     <svg id="map" style="margin: 0 auto; display: block;"></svg>
-    <div id="slider"></div>
-    <div id="slider-label">Aug-10 - Sept-15</div>
+    <input type="range" name="slider" id="dateSlider">
     <svg id="chart" style="margin: 0 auto; display: block;"></svg>
-    <script type="text/javascript">
-        const map = d3.select('#map');
+    <script type="text/javascript">const map = d3.select('#map');
         const chart = d3.select('#chart');
+        const slider = d3.select('#dateSlider');
         var imgWidth = 1000;
         var imgHeight = 1000;
+        var chartHeight = imgHeight * .6;
+        var barPad = 2;
         map.attr("height", imgHeight).attr("width", imgWidth);
-        chart.attr("height", imgHeight*.6).attr("width", imgWidth);
+        chart.attr("height", chartHeight).attr("width", imgWidth);
         var scale = 40.0;
         d3.json("data/streets.json", function (data) {
             //console.log(data)
@@ -60,16 +85,20 @@
         var died = 0;
 
         //need to get a number to tell how many of the deaths to show
+
         d3.csv("data/deathdays.csv", function (data) {
             //console.log(data);
-
-            var slider = createD3RangeSlider(0, data.length, "#slider");
-            console.log("this many days of deaths: " + slider);
-
+            // For the slider attr: min="10" max="100" value="50";
+            var chartScale = imgWidth / data.length;
+            var w = chartScale - barPad;
             var d = 0;
             for (d = 0; d < endDate; d++) {
+                chart.append('rect')
+                    .attr('x', d * (w + barPad))
+                    .attr('y', chartHeight - data[d].deaths)
+                    .attr('height', data[d].deaths)
+                    .attr('fill', 'steelblue');
                 died = died + Number(data[d].deaths);
-                //console.log(died);
             }
             return (died);
         });
