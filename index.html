@@ -12,10 +12,16 @@
         <input type="checkbox" class="checkbox" id="age" value="age" unchecked><label>Age</label>
     </div>
     <svg id="map" style="margin: 0 auto; display: block;"></svg>
-    <script type="text/javascript">const map = d3.select('#map');
+    <div id="slider"></div>
+    <div id="slider-label">Aug-10 - Sept-15</div>
+    <svg id="chart" style="margin: 0 auto; display: block;"></svg>
+    <script type="text/javascript">
+        const map = d3.select('#map');
+        const chart = d3.select('#chart');
         var imgWidth = 1000;
         var imgHeight = 1000;
         map.attr("height", imgHeight).attr("width", imgWidth);
+        chart.attr("height", imgHeight*.6).attr("width", imgWidth);
         var scale = 40.0;
         d3.json("data/streets.json", function (data) {
             //console.log(data)
@@ -52,9 +58,14 @@
 
         var endDate = 42;
         var died = 0;
+
         //need to get a number to tell how many of the deaths to show
         d3.csv("data/deathdays.csv", function (data) {
             //console.log(data);
+
+            var slider = createD3RangeSlider(0, data.length, "#slider");
+            console.log("this many days of deaths: " + slider);
+
             var d = 0;
             for (d = 0; d < endDate; d++) {
                 died = died + Number(data[d].deaths);
@@ -68,40 +79,39 @@
                 //console.log('you are here: ' + died);
                 if (Number(data[d].gender) == 1) {
                     map.append('circle')
-                    .attr('cx', data[d].x * scale)
-                    .attr('cy', data[d].y * scale)
-                    .attr('r', '2')
-                    .attr('fill', 'red')
-                    .attr('class', 'female');
+                        .attr('cx', data[d].x * scale)
+                        .attr('cy', data[d].y * scale)
+                        .attr('r', '2')
+                        .attr('fill', 'red')
+                        .attr('class', 'female');
                 }
                 else {
                     map.append('circle')
-                    .attr('cx', data[d].x * scale)
-                    .attr('cy', data[d].y * scale)
-                    .attr('r', '2')
-                    .attr('fill', 'red')
-                    .attr('class', 'male');
+                        .attr('cx', data[d].x * scale)
+                        .attr('cy', data[d].y * scale)
+                        .attr('r', '2')
+                        .attr('fill', 'red')
+                        .attr('class', 'male');
                 }
             }
 
         });
         // if gender checkbox is checked, change the colors of the death circles
-        function update (){
+        function update() {
             temp = d3.select('#gender');
             if (temp.property("checked")) {
                 console.log("checked");
-                 map.selectAll(".male").attr('fill', 'blue');
+                map.selectAll(".male").attr('fill', 'blue');
             }
             else {
                 console.log("unchecked");
                 map.selectAll(".male").attr('fill', 'red');
             }
         }
-        d3.select("#gender").on("change",update);
-            //d3.selectAll(“.male”).attr('fill', 'blue')
+        d3.select("#gender").on("change", update);
+        //d3.selectAll(“.male”).attr('fill', 'blue')
 
-        update();
-    </script>
+        update();</script>
 
 </body>
 </html>
