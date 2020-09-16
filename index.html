@@ -41,7 +41,7 @@ For an A you need to add:
     <script type="text/javascript">const map = d3.select('#map');
         const chart = d3.select('#chart');
         var imgWidth = 1000;
-        var imgHeight = 700;
+        var imgHeight = 750;
         var chartHeight = imgHeight * .6;
         var barPad = 2;
         map.attr("height", imgHeight).attr("width", imgWidth);
@@ -52,16 +52,39 @@ For an A you need to add:
             var a;
             var b;
             var l;
+            var xmin = 0;
+            var xmax = 0;
+            var ymin = 0;
+            var ymax = 0;
+            //find x,y min & max
+            for (a = 0; a < data.length; a++) {
+                l = data[a];
+                for (b = 0; b < l.length; b++) {
+                    if (l[b].x > xmax) {
+                        xmax = l[b].x;
+                    }
+                    if (l[b].x < xmin) {
+                        xmin = l[b].x;
+                    }
+                    if (l[b].y > ymax) {
+                        ymax = l[b].y;
+                    }
+                    if (l[b].y < ymin) {
+                        ymin = l[b].y;
+                    }
+                }
+                map.attr('height', (xmax - xmin) * scale).attr('height', (ymax - ymin) * scale);
+            }
             for (a = 0; a < data.length; a++) {
                 l = data[a];
                 for (b = 0; b < l.length - 1; b++) {
                     map.append('line')
                         .style('stroke', 'black')
                         .style('stroke-width', '2')
-                        .attr('x1', l[b].x * scale)
-                        .attr('x2', l[b + 1].x * scale)
-                        .attr('y1', l[b].y * scale)
-                        .attr('y2', l[b + 1].y * scale);
+                        .attr('x1', (l[b].x-xmin) * scale)
+                        .attr('x2', (l[b + 1].x-xmin) * scale)
+                        .attr('y1', (l[b].y-ymin) * scale)
+                        .attr('y2', (l[b + 1].y-ymin) * scale);
                     //console.log(l[b+1].x);
                 }
             }
