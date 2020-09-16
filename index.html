@@ -11,8 +11,11 @@
         <input type="checkbox" class="checkbox" id="gender" value="gender" unchecked><label>Gender</label>
         <input type="checkbox" class="checkbox" id="age" value="age" unchecked><label>Age</label>
     </div>
-    <svg id="map" style="margin: 0 auto; display: block;" width="1000" height="1000"></svg>
+    <svg id="map" style="margin: 0 auto; display: block;"></svg>
     <script type="text/javascript">const map = d3.select('#map');
+        var imgWidth = 1000;
+        var imgHeight = 1000;
+        map.attr("height", imgHeight).attr("width", imgWidth);
         var scale = 40.0;
         d3.json("data/streets.json", function (data) {
             //console.log(data)
