@@ -44,6 +44,10 @@ For an A you need to add:
         var imgHeight = 750;
         var chartHeight = imgHeight * .6;
         var barPad = 2;
+        var xmin = 0;
+        var xmax = 0;
+        var ymin = 0;
+        var ymax = 0;
         map.attr("height", imgHeight).attr("width", imgWidth);
         chart.attr("height", chartHeight).attr("width", imgWidth);
         var scale = 40.0;
@@ -52,10 +56,6 @@ For an A you need to add:
             var a;
             var b;
             var l;
-            var xmin = 0;
-            var xmax = 0;
-            var ymin = 0;
-            var ymax = 0;
             //find x,y min & max
             for (a = 0; a < data.length; a++) {
                 l = data[a];
