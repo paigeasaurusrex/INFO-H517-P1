@@ -41,7 +41,7 @@ For an A you need to add:
     <script type="text/javascript">const map = d3.select('#map');
         const chart = d3.select('#chart');
         var imgWidth = 1000;
-        var imgHeight = 650;
+        var imgHeight = 700;
         var chartHeight = imgHeight * .6;
         var barPad = 2;
         map.attr("height", imgHeight).attr("width", imgWidth);
@@ -94,8 +94,8 @@ For an A you need to add:
             for (d = 0; d < endDate; d++) {
                 chart.append('rect')
                     .attr('x', d * (w + barPad))
-                    .attr('y', (chartHeight - data[d].deaths)*2)
-                    .attr('height', data[d].deaths*2)
+                    .attr('y', (chartHeight - data[d].deaths))
+                    .attr('height', data[d].deaths)
                     .attr('width', w)
                     .attr('fill', 'steelblue');
                 console.log(chartHeight - data[d].deaths);
