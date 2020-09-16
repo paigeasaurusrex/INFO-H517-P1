@@ -36,11 +36,10 @@ ability to zoom in/out and pan around the map
         <input type="checkbox" class="checkbox" id="age" value="age" unchecked><label>Age</label>
     </div>
     <svg id="map" style="margin: 0 auto; display: block;"></svg>
-    <input type="range" name="slider" id="dateSlider">
+    <!--<input type="range" name="slider" id="dateSlider">-->
     <svg id="chart" style="margin: 0 auto; display: block;"></svg>
     <script type="text/javascript">const map = d3.select('#map');
         const chart = d3.select('#chart');
-        const slider = d3.select('#dateSlider');
         var imgWidth = 1000;
         var imgHeight = 1000;
         var chartHeight = imgHeight * .6;
@@ -97,7 +96,9 @@ ability to zoom in/out and pan around the map
                     .attr('x', d * (w + barPad))
                     .attr('y', chartHeight - data[d].deaths)
                     .attr('height', data[d].deaths)
+                    .attr('width', w)
                     .attr('fill', 'steelblue');
+                console.log(chartHeight - data[d].deaths);
                 died = died + Number(data[d].deaths);
             }
             return (died);
