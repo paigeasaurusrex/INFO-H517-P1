@@ -116,7 +116,7 @@ For an A you need to add:
             chart.attr('width', xmax * scale);
             var chartScale = (xmax * scale + 10);
             console.log("chartscale: " + chartScale);
-            var w = chartScale / data.length;
+            var w = chartScale / data.length - barPad;
             console.log("w: " + w);
             var d = 0;
             for (d = 0; d < endDate; d++) {
