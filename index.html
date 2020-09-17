@@ -132,16 +132,16 @@ For an A you need to add:
                 //console.log('you are here: ' + died);
                 if (Number(data[d].gender) == 1) {
                     map.append('circle')
-                        .attr('cx', data[d].x * scale)
-                        .attr('cy', data[d].y * scale)
+                        .attr('cx', (data[d].x - xmin) * scale)
+                        .attr('cy', (data[d].y - ymin) * scale)
                         .attr('r', '2')
                         .attr('fill', 'red')
                         .attr('class', 'female');
                 }
                 else {
                     map.append('circle')
-                        .attr('cx', data[d].x * scale)
-                        .attr('cy', data[d].y * scale)
+                        .attr('cx', (data[d].x - xmin) * scale)
+                        .attr('cy', (data[d].y - ymin) * scale)
                         .attr('r', '2')
                         .attr('fill', 'red')
                         .attr('class', 'male');
