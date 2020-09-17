@@ -10,7 +10,7 @@
 For a C you need:
 
 X: A well drawn map of the area (streets and pumps) including the locations of the deaths
-   a timeline graph showing the number of deaths per day
+X: a timeline graph showing the number of deaths per day
    ability to move the mouse over the timeline graph to choose which day to visualize - this should affect the deaths visible on the map and in the graph - at minimum all cholera deaths prior to that date should be shown on the map and the graph
    the graph and the map should be stable (i.e., they should not move when new data is added or removed)
    the graph and the map should be well labeled
@@ -42,7 +42,7 @@ For an A you need to add:
         const chart = d3.select('#chart');
         var imgWidth = 1000;
         var imgHeight = 750;
-        var chartHeight = imgHeight * .6;
+        var chartHeight = imgHeight * .5;
         var barPad = 2;
         var xmin = 10;
         var xmax = 0;
@@ -50,7 +50,7 @@ For an A you need to add:
         var ymax = 0;
         map.attr("height", imgHeight).attr("width", imgWidth);
         chart.attr("height", chartHeight).attr("width", imgWidth);
-        var scale = 40.0;
+        var scale = 35.0;
         d3.json("data/streets.json", function (data) {
             //console.log(data)
             var a;
@@ -122,7 +122,7 @@ For an A you need to add:
             for (d = 0; d < endDate; d++) {
                 chart.append('rect')
                     .attr('x', d * (w + barPad))
-                    .attr('y', (chartHeight - data[d].deaths*2))
+                    .attr('y', (chartHeight - data[d].deaths*2-20))
                     .attr('height', data[d].deaths*2)
                     .attr('width', w)
                     .attr('fill', 'steelblue');
@@ -151,7 +151,6 @@ For an A you need to add:
                         .attr('class', 'male');
                 }
             }
-
         });
         // if gender checkbox is checked, change the colors of the death circles
         function update() {
