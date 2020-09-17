@@ -111,8 +111,8 @@ For an A you need to add:
         d3.csv("data/deathdays.csv", function (data) {
             //console.log(data);
             // For the slider attr: min="10" max="100" value="50";
-            var chartScale = ((xmax-xmin)*scale + 10) / data.length;
-            var w = chartScale - barPad;
+            var chartScale = ((xmax-xmin)*scale + 10);
+            var w = chartScale/data.length - barPad;
             var d = 0;
             for (d = 0; d < endDate; d++) {
                 chart.append('rect')
