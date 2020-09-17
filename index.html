@@ -113,7 +113,9 @@ For an A you need to add:
             //console.log(data);
             // For the slider attr: min="10" max="100" value="50";
 
+            chart.attr('width', xmax * scale);
             var chartScale = (xmax * scale + 10);
+            console.log("chartscale: " + chartScale);
             var w = chartScale / data.length;
             console.log("w: " + w);
             var d = 0;
