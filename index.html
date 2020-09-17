@@ -75,7 +75,7 @@ For an A you need to add:
                 }
             }
             console.log("xmin:" + xmin + "xmax: " + xmax + "ymin: " + ymin + "ymax: " + ymax);
-            map.attr('height', (xmax) * scale).attr('height', (ymax) * scale);
+            map.attr('width', (xmax) * scale).attr('height', (ymax) * scale);
             for (a = 0; a < data.length; a++) {
                 l = data[a];
                 for (b = 0; b < l.length - 1; b++) {
