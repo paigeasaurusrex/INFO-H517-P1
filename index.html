@@ -73,6 +73,7 @@ For an A you need to add:
                         ymin = l[b].y;
                     }
                 }
+                console.log("xmin:" + xmin + "xmax: " + xmax + "ymin: " + ymin + "ymax: " + ymax);
                 map.attr('height', (xmax - xmin) * scale).attr('height', (ymax - ymin) * scale);
             }
             for (a = 0; a < data.length; a++) {
