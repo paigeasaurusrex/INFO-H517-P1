@@ -75,17 +75,17 @@ For an A you need to add:
                 }
             }
             console.log("xmin:" + xmin + "xmax: " + xmax + "ymin: " + ymin + "ymax: " + ymax);
-            map.attr('height', (xmax-xmin) * scale).attr('height', (ymax-xmin) * scale);
+            map.attr('height', (xmax) * scale).attr('height', (ymax) * scale);
             for (a = 0; a < data.length; a++) {
                 l = data[a];
                 for (b = 0; b < l.length - 1; b++) {
                     map.append('line')
                         .style('stroke', 'black')
                         .style('stroke-width', '2')
-                        .attr('x1', (l[b].x-xmin) * scale)
-                        .attr('x2', (l[b + 1].x-xmin) * scale)
-                        .attr('y1', (l[b].y-ymin) * scale)
-                        .attr('y2', (l[b + 1].y-ymin) * scale);
+                        .attr('x1', (l[b].x) * scale)
+                        .attr('x2', (l[b + 1].x) * scale)
+                        .attr('y1', (l[b].y) * scale)
+                        .attr('y2', (l[b + 1].y) * scale);
                     //console.log(l[b+1].x);
                 }
             }
@@ -96,8 +96,8 @@ For an A you need to add:
             for (i = 0; i < data.length; i++) {
 
                 map.append('circle')
-                    .attr('cx', (data[i].x-xmin) * scale)
-                    .attr('cy', (data[i].y-ymin) * scale)
+                    .attr('cx', (data[i].x) * scale)
+                    .attr('cy', (data[i].y) * scale)
                     .attr('r', '5')
                     .attr('fill', 'steelblue');
             }
