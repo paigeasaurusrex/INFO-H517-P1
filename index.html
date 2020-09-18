@@ -126,14 +126,17 @@ For an A you need to add:
                     .attr('width', w)
                     .attr('fill', 'steelblue')
                     .attr('class', 'dead')
+                    .attr('id', x)
                     .on('mouseover', function () {
                         d3.select(this).attr('fill', 'orange')
                     })
                     .on('mouseout', function () {
                         d3.select(this).attr('fill', 'steelblue')
                     })
-                    .on('click', function () {
+                    .on('click', function (d, i) {
                         console.log('end date: ' + x);
+                        console.log('d' + d);
+                        console.log('i' + i);
                         //d3.select('.date').text('Showing Data from Start to')
                     });
                     
