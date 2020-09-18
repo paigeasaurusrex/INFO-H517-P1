@@ -139,6 +139,7 @@ For an A you need to add:
                     })
                     .on('click', function (d, i) {
                         console.log('id: ' + d3.select(this).attr('id'));
+                        //click on bar graph picks the end date of the data display
                         newEndDate = Number(d3.select(this).attr('id'));
                         update();
                         //d3.select('.date').text('Showing Data from Start to')
@@ -158,7 +159,8 @@ For an A you need to add:
                         .attr('cy', (data[d].y) * scale)
                         .attr('r', '2')
                         .attr('fill', 'red')
-                        .attr('class', 'female');
+                        .attr('class', 'female')
+                        .attr('id', d);
                 }
                 else {
                     map.append('circle')
@@ -166,7 +168,8 @@ For an A you need to add:
                         .attr('cy', (data[d].y) * scale)
                         .attr('r', '2')
                         .attr('fill', 'red')
-                        .attr('class', 'male');
+                        .attr('class', 'male')
+                        .attr('id', d);
                 }
             }
         });
@@ -176,6 +179,7 @@ For an A you need to add:
          
         // if gender checkbox is checked, change the colors of the death circles
         function update() {
+            console.log('new end date: ' + newEndDate);
             genderTemp = d3.select('#gender');
             if (genderTemp.property("checked")) {
                 console.log("checked");
@@ -187,14 +191,26 @@ For an A you need to add:
             }
             i = 0;
             var z;
+            var newDeaths = 0;
             chart.selectAll('rect').each(function (d) {
                 if (d3.select(this).attr('id') <= newEndDate) {
                     d3.select(this).attr("fill-opacity", "1");
+                    newDeaths = newDeaths + (d3.select(this).attr("height")/2);
                 }
                 else {
                     d3.select(this).attr("fill-opacity", ".4");
                 }
             });
+            console.log('deaths:' + newDeaths);
+            map.selectAll('circle').each(function (d) {
+                if (d3.select(this).attr('id') <= newDeaths) {
+                    d3.select(this).attr("fill-opacity", "1");
+                }
+                else {
+                    d3.select(this).attr("fill-opacity", "0");
+                }
+            });
+
         }
 
         d3.select("#gender").on("change", update);
