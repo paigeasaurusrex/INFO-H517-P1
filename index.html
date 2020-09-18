@@ -117,19 +117,25 @@ For an A you need to add:
             console.log("chartscale: " + chartScale);
             var w = chartScale / data.length - barPad;
             console.log("w: " + w);
-            var d = 0;
-            for (d = 0; d < data.length; d++) {
+            var x = 0;
+            for (x = 0; x < data.length; x++) {
                 chart.append('rect')
-                    .attr('x', d * (w + barPad))
-                    .attr('y', (chartHeight - data[d].deaths * 2 - 20))
-                    .attr('height', data[d].deaths * 2)
+                    .attr('x', x * (w + barPad))
+                    .attr('y', (chartHeight - data[x].deaths * 2 - 20))
+                    .attr('height', data[x].deaths * 2)
                     .attr('width', w)
                     .attr('fill', 'steelblue')
+                    .attr('class', 'dead')
                     .on('mouseover', function () {
                         d3.select(this).attr('fill', 'orange')
                     })
                     .on('mouseout', function () {
                         d3.select(this).attr('fill', 'steelblue')
+                    })
+                    .on('click', function (d, i) {
+                        console.log('end date: ' + x);
+                        console.log('i: ' + i);
+                        //d3.select('.date').text('Showing Data from Start to')
                     });
                     
                 died = died + Number(data[d].deaths);
@@ -160,7 +166,7 @@ For an A you need to add:
         });
 
         //click on bar graph picks the end date of the data display
-        chart.selectAll('rect')
+        svg.selectAll('.dead')
             .on('click', function (d, i) {
                 console.log('d: ' + d);
                 console.log('i: ' + i);
