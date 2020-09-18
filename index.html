@@ -106,7 +106,7 @@ For an A you need to add:
 
         var endDate = 42;
         var died = 0;
-
+        console.log("end date: " + endDate);
         //need to get a number to tell how many of the deaths to show
 
         d3.csv("data/deathdays.csv", function (data) {
@@ -119,7 +119,7 @@ For an A you need to add:
             var w = chartScale / data.length - barPad;
             console.log("w: " + w);
             var d = 0;
-            for (d = 0; d < endDate; d++) {
+            for (d = 0; d < data.length; d++) {
                 chart.append('rect')
                     .attr('x', d * (w + barPad))
                     .attr('y', (chartHeight - data[d].deaths * 2 - 20))
@@ -131,6 +131,11 @@ For an A you need to add:
                     })
                     .on('mouseout', function () {
                         d3.select(this).attr('fill', 'steelblue')
+                    })
+                    .on('click', function (d, i) {
+                        endDate = i;
+                        console.log('End Date: ' + endDate);
+                        //d3.select('.date').text('Showing Data from Start to')
                     });
                     
                 died = died + Number(data[d].deaths);
@@ -161,12 +166,7 @@ For an A you need to add:
         });
 
         //click on bar graph pics the end date of the data display
-        chart.selectAll('rect')
-            .on('click', function (d, i) {
-                endDate = i;
-                console.log('End Date: ' + endDate);
-                //d3.select('.date').text('Showing Data from Start to')
-            });
+            
         // if gender checkbox is checked, change the colors of the death circles
         function update() {
             genderTemp = d3.select('#gender');
