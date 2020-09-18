@@ -112,7 +112,6 @@ For an A you need to add:
         d3.csv("data/deathdays.csv", function (data) {
             //console.log(data);
             // For the slider attr: min="10" max="100" value="50";
-
             chart.attr('width', xmax * scale);
             var chartScale = (xmax * scale + 10);
             console.log("chartscale: " + chartScale);
@@ -133,8 +132,8 @@ For an A you need to add:
                         d3.select(this).attr('fill', 'steelblue')
                     })
                     .on('click', function (d, i) {
-                        endDate = i;
-                        console.log('End Date: ' + endDate);
+                        console.log('d: ' + d);
+                        console.log('i: ' + i);
                         //d3.select('.date').text('Showing Data from Start to')
                     });
                     
