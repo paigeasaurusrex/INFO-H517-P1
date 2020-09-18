@@ -159,7 +159,9 @@ For an A you need to add:
                 }
             }
         });
-        d3.selectAll('rect')
+
+        //click on bar graph pics the end date of the data display
+        chart.selectAll('rect')
             .on('click', function (d, i) {
                 endDate = i;
                 console.log('End Date: ' + endDate);
