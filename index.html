@@ -132,9 +132,8 @@ For an A you need to add:
                     .on('mouseout', function () {
                         d3.select(this).attr('fill', 'steelblue')
                     })
-                    .on('click', function (d, i) {
+                    .on('click', function () {
                         console.log('end date: ' + x);
-                        console.log('i: ' + i);
                         //d3.select('.date').text('Showing Data from Start to')
                     });
                     
@@ -166,12 +165,7 @@ For an A you need to add:
         });
 
         //click on bar graph picks the end date of the data display
-        svg.selectAll('.dead')
-            .on('click', function (d, i) {
-                console.log('d: ' + d);
-                console.log('i: ' + i);
-                //d3.select('.date').text('Showing Data from Start to')
-            });
+        
          
         // if gender checkbox is checked, change the colors of the death circles
         function update() {
