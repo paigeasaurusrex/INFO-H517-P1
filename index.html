@@ -187,21 +187,17 @@ For an A you need to add:
             }
             i = 0;
             var z;
-            for (i = 0; i < days; i++) {
-                if (i <= newEndDate) {
-                    z = '#' + i;
-                    chart.select(z).attr("fill-opacity", "1");
-                    console.log(z);
+            chart.selectAll('rect').each(function (d) {
+                if (this.attr('id') <= newEndDate) {
+                    this.attr("fill-opacity", "1");
                 }
                 else {
-                    z = '#' + i;
-                    chart.select(z).attr("fill-opacity", ".4");
-                    console.log(z);
+                    this.attr("fill-opacity", ".4");
                 }
-            }
+            });
         }
+
         d3.select("#gender").on("change", update);
-        //d3.selectAll(“.male”).attr('fill', 'blue')
 
         update();</script>
 
