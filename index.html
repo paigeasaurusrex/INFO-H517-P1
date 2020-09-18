@@ -130,11 +130,6 @@ For an A you need to add:
                     })
                     .on('mouseout', function () {
                         d3.select(this).attr('fill', 'steelblue')
-                    })
-                    .on('click', function (d, i) {
-                        console.log('d: ' + d);
-                        console.log('i: ' + i);
-                        //d3.select('.date').text('Showing Data from Start to')
                     });
                     
                 died = died + Number(data[d].deaths);
@@ -165,7 +160,13 @@ For an A you need to add:
         });
 
         //click on bar graph pics the end date of the data display
-            
+        d3.selectAll('rect')
+            .on('click', function (d, i) {
+                console.log('d: ' + d);
+                console.log('i: ' + i);
+                //d3.select('.date').text('Showing Data from Start to')
+            });
+         
         // if gender checkbox is checked, change the colors of the death circles
         function update() {
             genderTemp = d3.select('#gender');
