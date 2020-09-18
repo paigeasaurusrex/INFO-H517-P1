@@ -188,11 +188,11 @@ For an A you need to add:
             i = 0;
             var z;
             chart.selectAll('rect').each(function (d) {
-                if (this.attr('id') <= newEndDate) {
-                    this.attr("fill-opacity", "1");
+                if (d3.select(this).attr('id') <= newEndDate) {
+                    d3.select(this).attr("fill-opacity", "1");
                 }
                 else {
-                    this.attr("fill-opacity", ".4");
+                    d3.select(this).attr("fill-opacity", ".4");
                 }
             });
         }
