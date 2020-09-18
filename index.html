@@ -125,7 +125,10 @@ For an A you need to add:
                     .attr('y', (chartHeight - data[d].deaths*2-20))
                     .attr('height', data[d].deaths*2)
                     .attr('width', w)
-                    .attr('fill', 'steelblue');
+                    .attr('fill', 'steelblue')
+                    .on('mouseover', function () {
+                        d3.select(this).attr('fill', 'orange')
+                    });
                 died = died + Number(data[d].deaths);
             }
             return (died);
@@ -154,8 +157,14 @@ For an A you need to add:
         });
         // if gender checkbox is checked, change the colors of the death circles
         function update() {
-            temp = d3.select('#gender');
-            if (temp.property("checked")) {
+            genderTemp = d3.select('#gender');
+            d3.selectAll('rect')
+                .on('click', function (d, i) {
+                    endDate = i;
+                    console.log('End Date: ' + endDate);
+                    //d3.select('.date').text('Showing Data from Start to')
+                });
+            if (genderTemp.property("checked")) {
                 console.log("checked");
                 map.selectAll(".male").attr('fill', 'blue');
             }
