@@ -112,7 +112,7 @@ For an A you need to add:
         //need to get a number to tell how many of the deaths to show
 
         d3.csv("data/deathdays.csv", function (data) {
-            //console.log(data);
+            console.log('days: '+ data.length);
             // For the slider attr: min="10" max="100" value="50";
             chart.attr('width', xmax * scale);
             var chartScale = (xmax * scale + 10);
@@ -179,14 +179,14 @@ For an A you need to add:
          
         // if gender checkbox is checked, change the colors of the death circles
         function update() {
-            console.log('new end date: ' + newEndDate);
+            //console.log('new end date: ' + newEndDate);
             genderTemp = d3.select('#gender');
             if (genderTemp.property("checked")) {
-                console.log("checked");
+                //console.log("checked");
                 map.selectAll(".male").attr('fill', 'blue');
             }
             else {
-                console.log("unchecked");
+                //console.log("unchecked");
                 map.selectAll(".male").attr('fill', 'red');
             }
             i = 0;
@@ -203,7 +203,7 @@ For an A you need to add:
             });
             console.log('deaths:' + newDeaths);
             map.selectAll('circle').each(function (d) {
-                if (d3.select(this).attr('id') <= newDeaths) {
+                if (d3.select(this).attr('id') < newDeaths) {
                     d3.select(this).attr("fill-opacity", "1");
                 }
                 else {
