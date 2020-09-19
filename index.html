@@ -129,7 +129,7 @@ For an A you need to add:
                         .attr('y1', (chartHeight - data[x].deaths * 2 - 20))
                         .attr('y2', (chartHeight - data[x].deaths * 2 - 20))
                         .style('stroke', 'black')
-                        .style('stroke-width', '1');
+                        .style('stroke-width', '1')
                         .on('mouseover', function () {
                             d3.select(this).attr('stroke', 'orange')
                         })
