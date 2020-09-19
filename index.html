@@ -61,6 +61,8 @@ For an A you need to add:
         map.attr("height", imgHeight).attr("width", imgWidth);
         chart.attr("height", chartHeight).attr("width", imgWidth);
 
+        var margin = { top: 20, right: 20, bottom: 30, left: 40 };
+
         var scale = 35.0;
         d3.json("data/streets.json", function (data) {
             //console.log(data)
@@ -139,8 +141,8 @@ For an A you need to add:
                     chart.append('line')
                         .attr('x1', x * (w + barPad) + 2)
                         .attr('x2', x * (w + barPad) + 2 + w)
-                        .attr('y1', (chartHeight - data[x].deaths * 2 - 20))
-                        .attr('y2', (chartHeight - data[x].deaths * 2 - 20))
+                        .attr('y1', (chartHeight - data[x].deaths * 2 - margin.bottom))
+                        .attr('y2', (chartHeight - data[x].deaths * 2 - margin.bottom))
                         .style('stroke', 'black')
                         .style('stroke-width', '1')
                         .on('mouseover', function () {
@@ -153,7 +155,7 @@ For an A you need to add:
                 else {
                     chart.append('rect')
                         .attr('x', x * (w + barPad) + 2)
-                        .attr('y', (chartHeight - data[x].deaths * 2 - 20))
+                        .attr('y', (chartHeight - data[x].deaths * 2 - margin.bottom))
                         .attr('height', data[x].deaths * 2)
                         .attr('width', w)
                         .attr('fill', 'steelblue')
@@ -175,7 +177,8 @@ For an A you need to add:
                             //d3.select('.date').text('Showing Data from Start to')
                         });
                 }
-
+                var xax = d3.scalePoint().domain([data[0]]).range([0, chartScale]);
+                svg.append("g").attr('transform', 'translate(0, chartHeight-20)').call(d3.axisBottom(xax));
                 died = died + Number(data[x].deaths);
             }
             return (died);
