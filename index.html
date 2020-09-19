@@ -141,7 +141,7 @@ For an A you need to add:
             var yax = d3.scale.linear().range([chartHeight, 0]);
 
             var xAxis = d3.svg.axis().scale(xax).orient("bottom").ticks(data.length);
-            var yAxis = d3.svg.axis().scale(y).orien("left").ticks(15);
+            var yAxis = d3.svg.axis().scale(yax).orien("left").ticks(15);
 
             var valueline = d3.svg.line()
                 .xax(function (d) { return xax(d.date); })
