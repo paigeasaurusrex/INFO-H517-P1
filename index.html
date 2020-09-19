@@ -12,7 +12,7 @@ For a C you need:
 X: A well drawn map of the area (streets and pumps) including the locations of the deaths
 X: a timeline graph showing the number of deaths per day
 X: ability to move the mouse over the timeline graph to choose which day to visualize - this should affect the deaths visible on the map and in the graph - at minimum all cholera deaths prior to that date should be shown on the map and the graph
-   the graph and the map should be stable (i.e., they should not move when new data is added or removed)
+x: the graph and the map should be stable (i.e., they should not move when new data is added or removed)
    the graph and the map should be well labeled
    you should check your visualization with a color blindness simulation tool to see that its OK
    the map and graph should update quickly when the user interacts
@@ -122,57 +122,29 @@ For an A you need to add:
             var x = 0;
             days = data.length;
             for (x = 0; x < days; x++) {
-                if (data[x].deaths == 0) {
-                    chart.append('rect')
-                        .attr('x', x * (w + barPad))
-                        .attr('y', (chartHeight - data[x].deaths - 20))
-                        .attr('height', data[x].deaths * 2)
-                        .attr('width', w)
-                        .attr('stroke-width', '1')
-                        .attr('stroke', 'black')
-                        .attr('class', 'dead')
-                        .attr("fill-opacity", "1")
-                        .attr('id', x)
-                        .attr('title', data[x].date)
-                        .on('mouseover', function () {
-                            d3.select(this).attr('fill', 'orange')
-                        })
-                        .on('mouseout', function () {
-                            d3.select(this).attr('fill', 'white')
-                        })
-                        .on('click', function (d, i) {
-                            console.log('id: ' + d3.select(this).attr('id'));
-                            //click on bar graph picks the end date of the data display
-                            newEndDate = Number(d3.select(this).attr('id'));
-                            update();
-                            //d3.select('.date').text('Showing Data from Start to')
-                        });
-                }
-                else {
-                    chart.append('rect')
-                        .attr('x', x * (w + barPad))
-                        .attr('y', (chartHeight - data[x].deaths * 2 - 20))
-                        .attr('height', data[x].deaths * 2)
-                        .attr('width', w)
-                        .attr('fill', 'steelblue')
-                        .attr('class', 'dead')
-                        .attr("fill-opacity", "1")
-                        .attr('id', x)
-                        .attr('title', data[x].date)
-                        .on('mouseover', function () {
-                            d3.select(this).attr('fill', 'orange')
-                        })
-                        .on('mouseout', function () {
-                            d3.select(this).attr('fill', 'steelblue')
-                        })
-                        .on('click', function (d, i) {
-                            console.log('id: ' + d3.select(this).attr('id'));
-                            //click on bar graph picks the end date of the data display
-                            newEndDate = Number(d3.select(this).attr('id'));
-                            update();
-                            //d3.select('.date').text('Showing Data from Start to')
-                        });
-                }
+                chart.append('rect')
+                    .attr('x', x * (w + barPad)+ 2)
+                    .attr('y', (chartHeight - data[x].deaths * 2 - 20))
+                    .attr('height', data[x].deaths * 2)
+                    .attr('width', w)
+                    .attr('fill', 'steelblue')
+                    .attr('class', 'dead')
+                    .attr("fill-opacity", "1")
+                    .attr('id', x)
+                    .attr('title', data[x].date)
+                    .on('mouseover', function () {
+                        d3.select(this).attr('fill', 'orange')
+                    })
+                    .on('mouseout', function () {
+                        d3.select(this).attr('fill', 'steelblue')
+                    })
+                    .on('click', function (d, i) {
+                        console.log('id: ' + d3.select(this).attr('id'));
+                        //click on bar graph picks the end date of the data display
+                        newEndDate = Number(d3.select(this).attr('id'));
+                        update();
+                        //d3.select('.date').text('Showing Data from Start to')
+                    });
                 died = died + Number(data[x].deaths);
             }
             return (died);
