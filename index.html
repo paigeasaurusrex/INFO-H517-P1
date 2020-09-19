@@ -125,10 +125,10 @@ For an A you need to add:
                 if (data[x].deaths == 0) {
                     chart.append('rect')
                         .attr('x', x * (w + barPad))
-                        .attr('y', (chartHeight - 1 - 20))
-                        .attr('height', 1 * 2)
+                        .attr('y', (chartHeight - data[x].deaths - 20))
+                        .attr('height', data[x].deaths * 2)
                         .attr('width', w)
-                        .attr('stroke-width', '3')
+                        .attr('stroke-width', '1')
                         .attr('stroke', 'black')
                         .attr('class', 'dead')
                         .attr("fill-opacity", "1")
@@ -224,6 +224,7 @@ For an A you need to add:
             chart.selectAll('rect').each(function (d) {
                 if (d3.select(this).attr('id') <= newEndDate) {
                     d3.select(this).attr("fill-opacity", "1");
+                    if (d3.select(this))
                     newDeaths = newDeaths + (d3.select(this).attr("height")/2);
                 }
                 else {
