@@ -39,10 +39,7 @@ For an A you need to add:
     <!--<input type="range" name="slider" id="dateSlider">-->
     <svg id="chart" style="border: 1px solid black; margin: 0 auto; display: inline-flex;"></svg>
     <script type="text/javascript">const map = d3.select('#map');
-        const chart = d3.select('#chart'),
-            margin = { top: 20, right: 20, bottom: 30, left: 40 },
-            width = +chart.attr("width") - margin.left - margin.right,
-            height = +chart.attr("height") - margin.top - margin.bottom;
+        var chart = d3.select('#chart');
         var imgWidth = 1000;
         var imgHeight = 750;
         var chartHeight = imgHeight * .5;
@@ -53,6 +50,15 @@ For an A you need to add:
         var ymax = 0;
         map.attr("height", imgHeight).attr("width", imgWidth);
         chart.attr("height", chartHeight).attr("width", imgWidth);
+
+        var margin = { top: 20, right: 20, bottom: 30, left: 40 };
+        var width = +chart.attr("width") - margin.left - margin.right;
+        var height = +chart.attr("height") - margin.top - margin.bottom;
+        var x = d3.scaleBand().rangeRound([0, width]).padding(0.1),
+            y = d3.scaleLinear().rangeRound([height, 0]);
+
+        var g = chart.append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
         var scale = 35.0;
         d3.json("data/streets.json", function (data) {
             //console.log(data)
