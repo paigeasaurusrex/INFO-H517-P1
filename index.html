@@ -182,7 +182,7 @@ For an A you need to add:
                 var timeFormat = d3.time.format('%d-%b');
                 //console.log("start date: " + timeFormat.parse(data[1].date));
                 var xScale = d3.time.scale()
-                    .domain(timeFormat.parse([data[1].date), timeFormat.parse(data[data.length].date)])
+                    .domain(timeFormat.parse(data[1].date), timeFormat.parse(data[data.length].date)])
                     .range(0, chartScale);
 
                 var xAxis = d3.svg.axis()
