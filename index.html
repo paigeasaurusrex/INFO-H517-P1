@@ -178,7 +178,7 @@ For an A you need to add:
                         });
                 }
                 var xax = d3.scalePoint().domain([data[0]]).range([0, chartScale]);
-                svg.append("g").attr('transform', 'translate(0, chartHeight-20)').call(d3.axisBottom(xax));
+                chart.append("g").attr('transform', 'translate(0, chartHeight-20)').call(d3.axisBottom(xax));
                 died = died + Number(data[x].deaths);
             }
             return (died);
