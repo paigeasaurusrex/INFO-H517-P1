@@ -140,12 +140,12 @@ For an A you need to add:
             var xax = d3.time.scale().range(0, chartScale);
             var yax = d3.scale.linear().range([chartHeight, 0]);
 
-            var xAxis = chart.axis().scale(xax).orient("bottom").ticks(data.length);
-            var yAxis = chart.axis().scale(y).orien("left").ticks(15);
+            var xAxis = d3.svg.axis().scale(xax).orient("bottom").ticks(data.length);
+            var yAxis = d3.svg.axis().scale(y).orien("left").ticks(15);
 
-            var valueline = chart.line()
+            var valueline = d3.svg.line()
                 .xax(function (d) { return xax(d.date); })
-                .yax(function (d) { return yax(d.close);})
+                .yax(function (d) { return yax(d.close); });
 
 
             var x = 0;
