@@ -61,12 +61,6 @@ For an A you need to add:
         map.attr("height", imgHeight).attr("width", imgWidth);
         chart.attr("height", chartHeight).attr("width", imgWidth);
 
-        var margin = { top: 20, right: 20, bottom: 30, left: 40 };
-        var width = +chart.attr("width") - margin.left - margin.right;
-        var height = +chart.attr("height") - margin.top - margin.bottom;
-
-        var g = chart.append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
         var scale = 35.0;
         d3.json("data/streets.json", function (data) {
             //console.log(data)
@@ -136,16 +130,6 @@ For an A you need to add:
             console.log("chartscale: " + chartScale);
             var w = chartScale / data.length - barPad;
             console.log("w: " + w);
-            var parseDate = d3.time.format("%d-%b").parse;
-            var xax = d3.time.scale().range(0, chartScale);
-            var yax = d3.scale.linear().range([chartHeight, 0]);
-
-            var xAxis = d3.svg.axis().scale(xax).orient("bottom").ticks(data.length);
-            var yAxis = d3.svg.axis().scale(yax).orient("left").ticks(15);
-
-            var valueline = d3.svg.line()
-                .xax(function (d) { return xax(d.date); })
-                .yax(function (d) { return yax(d.close); });
 
 
             var x = 0;
