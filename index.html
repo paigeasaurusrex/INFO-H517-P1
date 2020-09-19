@@ -123,7 +123,7 @@ For an A you need to add:
             days = data.length;
             for (x = 0; x < days; x++) {
                 if (data[x].deaths == 0) {
-                    chart.apped('line')
+                    chart.append('line')
                         .attr('x1', x * (w + barPad) + 2)
                         .attr('x2', x * (w + barPad) + 2 + w)
                         .attr('y1', (chartHeight - data[x].deaths * 2 - 20))
