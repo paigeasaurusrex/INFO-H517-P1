@@ -3,6 +3,8 @@
 <head>
     <meta charset="utf-8" />
     <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script src="https://d3js.org/d3-time.v2.min.js"></script>
+    <script src="https://d3js.org/d3-time-format.v3.min.js"></script>
     <style>
         .axis path,
         .axis line {
@@ -11,7 +13,6 @@
             stroke-width: 1;
             shape-rendering: crispEdges;
         }
-
     </style>
     <title></title>
 </head>
@@ -177,8 +178,8 @@ For an A you need to add:
                             //d3.select('.date').text('Showing Data from Start to')
                         });
                 }
-                var xax = d3.scalePoint().domain([data[0]]).range([0, chartScale]);
-                chart.append("g").attr('transform', 'translate(0, chartHeight-20)').call(d3.axisBottom(xax));
+                var timeFormat = d3.time.format('%d-%b');
+                console.log("start date: " + timeFormat.parse([data[1].date));
                 died = died + Number(data[x].deaths);
             }
             return (died);
