@@ -162,29 +162,7 @@ For an A you need to add:
                             //d3.select('.date').text('Showing Data from Start to')
                         });
                 }
-                chart.append('rect')
-                    .attr('x', x * (w + barPad)+ 2)
-                    .attr('y', (chartHeight - data[x].deaths * 2 - 20))
-                    .attr('height', data[x].deaths * 2)
-                    .attr('width', w)
-                    .attr('fill', 'steelblue')
-                    .attr('class', 'dead')
-                    .attr("fill-opacity", "1")
-                    .attr('id', x)
-                    .attr('title', data[x].date)
-                    .on('mouseover', function () {
-                        d3.select(this).attr('fill', 'orange')
-                    })
-                    .on('mouseout', function () {
-                        d3.select(this).attr('fill', 'steelblue')
-                    })
-                    .on('click', function (d, i) {
-                        console.log('id: ' + d3.select(this).attr('id'));
-                        //click on bar graph picks the end date of the data display
-                        newEndDate = Number(d3.select(this).attr('id'));
-                        update();
-                        //d3.select('.date').text('Showing Data from Start to')
-                    });
+
                 died = died + Number(data[x].deaths);
             }
             return (died);
