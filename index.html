@@ -178,8 +178,9 @@ For an A you need to add:
                             //d3.select('.date').text('Showing Data from Start to')
                         });
                 }
+                //Add scales to the bar chart
                 var timeFormat = d3.time.format('%d-%b');
-                console.log("start date: " + timeFormat.parse([data[1].date));
+                console.log("start date: " + timeFormat.parse(data[1].date));
                 died = died + Number(data[x].deaths);
             }
             return (died);
