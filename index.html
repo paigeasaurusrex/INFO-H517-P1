@@ -39,7 +39,10 @@ For an A you need to add:
     <!--<input type="range" name="slider" id="dateSlider">-->
     <svg id="chart" style="border: 1px solid black; margin: 0 auto; display: block;"></svg>
     <script type="text/javascript">const map = d3.select('#map');
-        const chart = d3.select('#chart');
+        const chart = d3.select('#chart'),
+            margin = { top: 20, right: 20, bottom: 30, left: 40 },
+            width = +chart.attr("width") - margin.left - margin.right,
+            height = +chart.attr("height") - margin.top - margin.bottom;
         var imgWidth = 1000;
         var imgHeight = 750;
         var chartHeight = imgHeight * .5;
