@@ -3,6 +3,16 @@
 <head>
     <meta charset="utf-8" />
     <script src="https://d3js.org/d3.v3.min.js"></script>
+    <style>
+        .axis path,
+        .axis line {
+            fill: none;
+            stroke: grey;
+            stroke-width: 1;
+            shape-rendering: crispEdges;
+        }
+
+    </style>
     <title></title>
 </head>
 <!--
@@ -35,7 +45,7 @@ For an A you need to add:
         <input type="checkbox" class="checkbox" id="gender" value="gender" unchecked><label>Gender</label>
         <input type="checkbox" class="checkbox" id="age" value="age" unchecked><label>Age</label>
     </div>
-    <svg id="map" style="border: 1px solid black; margin: 0 auto; display: block;"></svg>
+    <svg id="map" style="border: 1px solid black; margin: 0 auto; display: inline-flex;"></svg>
     <!--<input type="range" name="slider" id="dateSlider">-->
     <svg id="chart" style="border: 1px solid black; margin: 0 auto; display: inline-flex;"></svg>
     <script type="text/javascript">const map = d3.select('#map');
@@ -126,6 +136,18 @@ For an A you need to add:
             console.log("chartscale: " + chartScale);
             var w = chartScale / data.length - barPad;
             console.log("w: " + w);
+            var parseDate = d3.time.format("%d-%b").parse;
+            var xax = d3.time.scale().range(0, chartScale);
+            var yax = d3.scale.linear().range([chartHeight, 0]);
+
+            var xAxis = chart.axis().scale(xax).orient("bottom").ticks(data.length);
+            var yAxis = chart.axis().scale(y).orien("left").ticks(15);
+
+            var valueline = chart.line()
+                .xax(function (d) { return xax(d.date); })
+                .yax(function (d) { return yax(d.close);})
+
+
             var x = 0;
             days = data.length;
             for (x = 0; x < days; x++) {
