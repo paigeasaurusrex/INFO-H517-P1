@@ -9,9 +9,13 @@
         .axis path,
         .axis line {
             fill: none;
-            stroke: grey;
+            stroke: black;
             stroke-width: 1;
             shape-rendering: crispEdges;
+        }
+        .axis text {
+            font-family: sans-serif;
+            font-size: 11px;
         }
     </style>
     <title></title>
@@ -45,10 +49,15 @@ For an A you need to add:
     <div>
         <input type="checkbox" class="checkbox" id="gender" value="gender" unchecked><label>Gender</label>
         <input type="checkbox" class="checkbox" id="age" value="age" unchecked><label>Age</label>
+        
     </div>
     <svg id="map" style="border: 1px solid black; margin: 0 auto; display: inline-flex;"></svg>
     <!--<input type="range" name="slider" id="dateSlider">-->
-    <svg id="chart" style="border: 1px solid black; margin: 0 auto; display: inline-flex;"></svg>
+    <svg id="chart" style="border: 1px solid black; margin: 0 auto; display: inline-flex;">
+        <text id="xlabel">Date</text>
+        <text id="ylabel">Deaths</text>
+        <text id="mainlabel">Deaths per Day</text>
+    </svg>
     <script type="text/javascript">const map = d3.select('#map');
         var chart = d3.select('#chart');
         var imgWidth = 1000;
@@ -62,9 +71,9 @@ For an A you need to add:
         map.attr("height", imgHeight).attr("width", imgWidth);
         chart.attr("height", chartHeight).attr("width", imgWidth);
 
-        var margin = { top: 20, right: 20, bottom: 30, left: 40 };
+        var margin = { top: 40, right: 20, bottom: 70, left: 60 };
 
-        var scale = 35.0;
+        var scale = 40.0;
         d3.json("data/streets.json", function (data) {
             //console.log(data)
             var a;
@@ -89,17 +98,17 @@ For an A you need to add:
                 }
             }
             console.log("xmin:" + xmin + "xmax: " + xmax + "ymin: " + ymin + "ymax: " + ymax);
-            map.attr('width', (xmax) * scale).attr('height', (ymax) * scale);
+            map.attr('width', (xmax-xmin) * scale).attr('height', (ymax-ymin) * scale);
             for (a = 0; a < data.length; a++) {
                 l = data[a];
                 for (b = 0; b < l.length - 1; b++) {
                     map.append('line')
                         .style('stroke', 'black')
                         .style('stroke-width', '2')
-                        .attr('x1', (l[b].x) * scale)
-                        .attr('x2', (l[b + 1].x) * scale)
-                        .attr('y1', (l[b].y) * scale)
-                        .attr('y2', (l[b + 1].y) * scale);
+                        .attr('x1', (l[b].x-xmin) * scale)
+                        .attr('x2', (l[b + 1].x-xmin) * scale)
+                        .attr('y1', (l[b].y-ymin) * scale)
+                        .attr('y2', (l[b + 1].y-ymin) * scale);
                     //console.log(l[b+1].x);
                 }
             }
@@ -110,8 +119,8 @@ For an A you need to add:
             for (i = 0; i < data.length; i++) {
 
                 map.append('circle')
-                    .attr('cx', (data[i].x) * scale)
-                    .attr('cy', (data[i].y) * scale)
+                    .attr('cx', (data[i].x-xmin) * scale)
+                    .attr('cy', (data[i].y-ymin) * scale)
                     .attr('r', '5')
                     .attr('fill', 'steelblue');
             }
@@ -119,31 +128,33 @@ For an A you need to add:
         //slider to get ending date for showing the data
 
         var endDate = 42;
-        var newEndDate = 0;
+        var newEndDate = 42;
         var died = 0;
         var days = 0;
         console.log("end date: " + endDate);
         //need to get a number to tell how many of the deaths to show
 
         d3.csv("data/deathdays.csv", function (data) {
-            console.log('days: '+ data.length);
+            console.log(data);
             // For the slider attr: min="10" max="100" value="50";
             var chartScale = (xmax * scale + 10);
-            chart.attr('width', chartScale);
+            chartHeight = map.attr('height');
+            chart.attr('width', chartScale + margin.left).attr('height', chartHeight);
             console.log("chartscale: " + chartScale);
             var w = chartScale / data.length - barPad;
             console.log("w: " + w);
-
-
+            
+            var hmax = 0;
             var x = 0;
             days = data.length;
+            var rectScale = 3;
             for (x = 0; x < days; x++) {
                 if (data[x].deaths == 0) {
                     chart.append('line')
-                        .attr('x1', x * (w + barPad) + 2)
-                        .attr('x2', x * (w + barPad) + 2 + w)
-                        .attr('y1', (chartHeight - data[x].deaths * 2 - margin.bottom))
-                        .attr('y2', (chartHeight - data[x].deaths * 2 - margin.bottom))
+                        .attr('x1', margin.left + x * (w + barPad) + 2)
+                        .attr('x2', margin.left + x * (w + barPad) + 2 + w)
+                        .attr('y1', (chartHeight - data[x].deaths * rectScale - margin.bottom))
+                        .attr('y2', (chartHeight - data[x].deaths * rectScale - margin.bottom))
                         .style('stroke', 'black')
                         .style('stroke-width', '1')
                         .on('mouseover', function () {
@@ -155,9 +166,9 @@ For an A you need to add:
                 }
                 else {
                     chart.append('rect')
-                        .attr('x', x * (w + barPad) + 2)
-                        .attr('y', (chartHeight - data[x].deaths * 2 - margin.bottom))
-                        .attr('height', data[x].deaths * 2)
+                        .attr('x', margin.left + x * (w + barPad) + 2)
+                        .attr('y', (chartHeight - data[x].deaths * rectScale - margin.bottom))
+                        .attr('height', data[x].deaths * rectScale)
                         .attr('width', w)
                         .attr('fill', 'steelblue')
                         .attr('class', 'dead')
@@ -177,21 +188,55 @@ For an A you need to add:
                             update();
                             //d3.select('.date').text('Showing Data from Start to')
                         });
+                    console.log("deaths:" + data[x].deaths);
+                    console.log("hmax: " + hmax);
+                    if (Number(data[x].deaths) > hmax) {
+                        hmax = Number(data[x].deaths);
+                    }
                 }
-                //Add scales to the bar chart
-                var timeFormat = d3.time.format('%d-%b');
-                //console.log("start date: " + timeFormat.parse(data[1].date));
-                var xScale = d3.time.scale()
-                    .domain([timeFormat.parse(data[1].date), timeFormat.parse(data[data.length-1].date)])
-                    .range([0, chartScale]);
-
-                var xAxis = d3.svg.axis()
-                    .scale(xScale)
-                    .orient("bottom");
-                chart.append("g")
-                    .call(xAxis);
                 died = died + Number(data[x].deaths);
             }
+            
+            //Add scales to the bar chart
+            var timeFormat = d3.time.format('%d-%b');
+            //console.log("start date: " + timeFormat.parse(data[1].date));
+            var xScale = d3.time.scale()
+                .domain([timeFormat.parse(data[0].date), timeFormat.parse(data[data.length - 1].date)])
+                .range([margin.left + 2 + (w / 2), chart.attr('width')-(w/2)]);
+            var yScale = d3.scale.linear()
+                .domain([0, (chartHeight-margin.top-margin.bottom)/rectScale])
+                .range([chartHeight - margin.bottom, margin.top]);
+
+            var xAxis = d3.svg.axis()
+                .scale(xScale)
+                .orient("bottom")
+                .ticks(21)
+                .tickFormat(d3.time.format("%d-%b"));
+            chart.append("g")
+                .attr('class', 'axis')
+                .attr('transform', 'translate(0,' + (chartHeight - margin.bottom) + ')')
+                .call(xAxis)
+                .selectAll("text")
+                .style("text-anchor", "end")
+                .attr("dx", "-.8em")
+                .attr("dy", ".15em")
+                .attr("transform", "rotate(-65)");
+            var yAxis = d3.svg.axis()
+                .scale(yScale)
+                .orient("left")
+                .ticks(10);
+            chart.append('g')
+                .attr('class', 'axis')
+                .attr('transform', 'translate(' + margin.left + ",0)")
+                .call(yAxis);
+            chart.select('#xlabel')
+                .style('text-anchor', 'center')
+                .attr('x', (chartScale - margin.left) / 2 + margin.left)
+                .attr('y', chartHeight - 10);
+            chart.select('#ylabel')
+                .style('text-anchor', 'center')
+                .attr('transform', 'translate(' + (margin.left /3) + ',' + ((chartHeight - margin.top - margin.bottom) / 2 + margin.top)+') rotate(-90)')
+
             return (died);
         });
         d3.csv("data/deaths_age_sex.csv", function (data) {
@@ -200,8 +245,8 @@ For an A you need to add:
                 //console.log('you are here: ' + died);
                 if (Number(data[d].gender) == 1) {
                     map.append('circle')
-                        .attr('cx', (data[d].x) * scale)
-                        .attr('cy', (data[d].y) * scale)
+                        .attr('cx', (data[d].x-xmin) * scale)
+                        .attr('cy', (data[d].y-ymin) * scale)
                         .attr('r', '2')
                         .attr('fill', 'red')
                         .attr('class', 'female')
@@ -209,8 +254,8 @@ For an A you need to add:
                 }
                 else {
                     map.append('circle')
-                        .attr('cx', (data[d].x) * scale)
-                        .attr('cy', (data[d].y) * scale)
+                        .attr('cx', (data[d].x-xmin) * scale)
+                        .attr('cy', (data[d].y-ymin) * scale)
                         .attr('r', '2')
                         .attr('fill', 'red')
                         .attr('class', 'male')
@@ -235,7 +280,6 @@ For an A you need to add:
                 map.selectAll(".male").attr('fill', 'red');
             }
             i = 0;
-            var z;
             var newDeaths = 0;
             //updates visibility of rectangles based on click
             chart.selectAll('rect').each(function (d) {
