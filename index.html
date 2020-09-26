@@ -139,12 +139,12 @@ X: a timeline graph showing the number of deaths per day
 X: ability to move the mouse over the timeline graph to choose which day to visualize - this should affect the deaths visible on the map and in the graph - at minimum all cholera deaths prior to that date should be shown on the map and the graph
 X: the graph and the map should be stable (i.e., they should not move when new data is added or removed)
 X: the graph and the map should be well labeled
-   you should check your visualization with a color blindness simulation tool to see that its OK
+X: you should check your visualization with a color blindness simulation tool to see that its OK
 X: the map and graph should update quickly when the user interacts
    an about screen with details on who wrote the project, where the data came from, etc.
 
 For a B you need to add:
-   more data to the map - major street names and the location of the brewery and the work house
+X: more data to the map - major street names and the location of the brewery and the work house
 X: ability to easily see on the map whether each victim was male or female
 X: ability to easily see on the map the age of each victim
 X: additional graphs showing the distribution of deaths by sex and age overall
@@ -152,7 +152,7 @@ X: additional graphs showing the distribution of deaths by sex and age overall
 For an A you need to add:
    ability to cluster the data on the map into a grid that shows the number of dead in each grid cell (even with this small amount of data the points are starting to overwhelm) and the user should be able to vary the size of the clusters.
    ability to show data from a window of days on the timeline graph
-   ability to zoom in/out and pan around the map
+X: ability to zoom in/out and pan around the map
 -->
 <body>
     <div id="container">
@@ -168,7 +168,9 @@ For an A you need to add:
                     evidence and made the case for public health policies to improve water sanitation. The map below is an interactive recreation of the original
                     visualization created by Dr. Snow. It can be filtered by date and show the distribuition of deaths for each gender and age range.
                 </p>
-                <svg id="map" style="border: 1px solid black;transform: scale(1,-1); margin: 0 auto; display: inline-flex;"></svg>
+                <svg id="map" style="border: 1px solid black;transform: scale(1,-1); margin: 0 auto; display: inline-flex;">
+                    <text>Brewery</text>
+                </svg>
                 <svg id="chart" style="border: 1px solid black; margin: 0 auto; display: inline-flex;">
                     <text id="xlabel">Date</text>
                     <text id="ylabel">Deaths</text>
@@ -237,6 +239,7 @@ For an A you need to add:
         var xmax = 0;
         var ymin = 10;
         var ymax = 0;
+        var w = 0;
         //set up colors
         var blues = ["#eff3ff", "#c6dbef", "#9ecae1", "#6baed6", "#3182bd", "#08519c"];
         var reds = ["#fee5d9", "#fcbba1", "#fc9272", "#fb6a4a", "#de2d26", "#a50f15"];
@@ -293,10 +296,35 @@ For an A you need to add:
                         .attr('x1', (l[b].x - xmin) * scale)
                         .attr('x2', (l[b + 1].x - xmin) * scale)
                         .attr('y1', (l[b].y - ymin) * scale)
-                        .attr('y2', (l[b + 1].y - ymin) * scale);
-                    //console.log(l[b+1].x);
+                        .attr('y2', (l[b + 1].y - ymin) * scale);;
                 }
             }
+            map.append('text')
+                .text('Brewery')
+                .style('font-size', '10px')
+                .attr('transform', 'translate(' + 10.2 * scale + ',' + 9 * scale + ') rotate(-60) scale (1, -1)');
+            map.append('rect')
+                .attr('x', '0')//7 * scale
+                .attr('y', '0')//10 * scale
+                .attr('stroke', 'black')
+                .attr('stroke-width', '1.5px')
+                .attr('height', '40')
+                .attr('width', '60')
+                .attr('fill', 'white')
+                .attr('transform', 'translate(' + 6.8 * scale + ',' + 9.7 * scale + ') rotate(27 20 30)');
+            map.append('text')
+                .text('Work House')
+                .style('font-size', '10px')
+                .attr('transform', 'translate(' + 7 * scale + ',' + 10 * scale + ') rotate(27) scale (1, -1)');
+            map.append('text')
+                .text('Broad Street')
+                .style('font-size', '10px')
+                .attr('transform', 'translate(' + 8.5 * scale + ',' + 8.3 * scale + ') rotate(27) scale (1, -1)');
+            map.append('text')
+                .text('Oxford Street')
+                .style('font-size', '10px')
+                .attr('transform', 'translate(' + 7 * scale + ',' + 13.4* scale + ') rotate(12) scale (1, -1)');
+                
         });
         d3.csv("data/pumps.csv", function (data) {
             //console.log(data);
@@ -307,10 +335,11 @@ For an A you need to add:
                     .attr('cx', (data[i].x - xmin) * scale)
                     .attr('cy', (data[i].y - ymin) * scale)
                     .attr('r', '5')
-                    .attr('fill', 'steelblue');
+                    .attr('fill', 'steelblue')
+                    .attr('stroke', 'white')
+                    .attr('stroke-width', '1.5px');
             }
         });
-        //slider to get ending date for showing the data
 
         var endDate = 42;
         var newEndDate = 42;
@@ -321,12 +350,11 @@ For an A you need to add:
 
         d3.csv("data/deathdays.csv", function (data) {
             console.log(data);
-            // For the slider attr: min="10" max="100" value="50";
             var chartScale = (xmax * scale + 10);
             chartHeight = map.attr('height');
             chart.attr('width', chartScale + margin.left).attr('height', chartHeight);
             console.log("chartscale: " + chartScale);
-            var w = chartScale / data.length - barPad;
+            w = chartScale / data.length - barPad;
             console.log("w: " + w);
 
             var hmax = 0;
