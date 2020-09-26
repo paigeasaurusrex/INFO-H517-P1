@@ -68,7 +68,7 @@
             }
 
         div#navigation {
-            background: #7cb71c;
+            background: #f1a340;
         }
 
             div#navigation li {
@@ -76,7 +76,7 @@
             }
 
         div#extra {
-            background: #147FA9;
+            background: #998ec3;
         }
 
         div#footer {
@@ -138,9 +138,9 @@ X: A well drawn map of the area (streets and pumps) including the locations of t
 X: a timeline graph showing the number of deaths per day
 X: ability to move the mouse over the timeline graph to choose which day to visualize - this should affect the deaths visible on the map and in the graph - at minimum all cholera deaths prior to that date should be shown on the map and the graph
 X: the graph and the map should be stable (i.e., they should not move when new data is added or removed)
-   the graph and the map should be well labeled
+X: the graph and the map should be well labeled
    you should check your visualization with a color blindness simulation tool to see that its OK
-   the map and graph should update quickly when the user interacts
+X: the map and graph should update quickly when the user interacts
    an about screen with details on who wrote the project, where the data came from, etc.
 
 For a B you need to add:
@@ -162,13 +162,11 @@ For an A you need to add:
         </div>
         <div id="wrapper">
             <div id="content">
-                <p><strong>1. Main Content</strong></p>
-                <h3>The Ultimate Guide to Flexbox </h3>
+                <h3>History </h3>
                 <p>
-                    The Flex Layout module is new layout module in CSS3 made to improve the items align, directions and order
-                    in the container even when they are with dynamic or even unknown size. The prime characteristic of the
-                    flex container is the ability to modify the width or height of its children to fill the available space
-                    in the best possible way on different screen sizes.
+                    Dr. John Snow's visualization of the deaths realated to the Broad Street Cholera outbreak of 1854 provided some of the most compelling
+                    evidence and made the case for public health policies to improve water sanitation. The map below is an interactive recreation of the original
+                    visualization created by Dr. Snow. It can be filtered by date and show the distribuition of deaths for each gender and age range.
                 </p>
                 <svg id="map" style="border: 1px solid black;transform: scale(1,-1); margin: 0 auto; display: inline-flex;"></svg>
                 <svg id="chart" style="border: 1px solid black; margin: 0 auto; display: inline-flex;">
@@ -201,7 +199,7 @@ For an A you need to add:
         </div>
         <div id="extra">
             <p><strong><input type="checkbox" class="checkbox" id="age" value="age" unchecked><label>Display Age on Map</label></strong></p>
-            <h3>Age Distribution</h3>
+            <h3>Age Distribution (ranges in years)</h3>
             <svg id="agechart" height="450" width="260" style="background-color: white; border: 1px solid black; margin: 20 20; display: inline-flex;">
                 <text id="ylabel">Deaths</text>
 
@@ -216,7 +214,16 @@ For an A you need to add:
     
     <!--<input type="range" name="slider" id="dateSlider">-->
     
-    <script type="text/javascript">const map = d3.select('#map');
+    <script type="text/javascript">
+        const map = d3.select('#map')
+            .attr('height', '620')
+            .attr('width', '661')
+            .call(
+                d3.behavior.zoom()
+                    .scaleExtent([1, 10])
+                    .on("zoom", zoom)
+            )
+            .append('g');
         const chart = d3.select('#chart');
         const gchart = d3.select('#genderchart');
         const achart = d3.select('#agechart');
@@ -276,6 +283,7 @@ For an A you need to add:
             }
             console.log("xmin:" + xmin + "xmax: " + xmax + "ymin: " + ymin + "ymax: " + ymax);
             map.attr('width', (xmax - xmin) * scale).attr('height', (ymax - ymin) * scale);
+            console.log("map ht: " + map.attr('height') + "Map w: " + map.attr('width'));
             for (a = 0; a < data.length; a++) {
                 l = data[a];
                 for (b = 0; b < l.length - 1; b++) {
@@ -431,7 +439,7 @@ For an A you need to add:
                         .attr('cx', (data[d].x - xmin) * scale)
                         .attr('cy', (data[d].y - ymin) * scale)
                         .attr('r', '3')
-                        .attr('fill', reds[4])
+                        .attr('fill', ageColor[1])
                         .attr('class', defclass)
                         .attr('id', d);
                     ageCounts[Number(data[d].age)]++;
@@ -443,7 +451,7 @@ For an A you need to add:
                         .attr('cx', (data[d].x - xmin) * scale)
                         .attr('cy', (data[d].y - ymin) * scale)
                         .attr('r', '3')
-                        .attr('fill', reds[4])
+                        .attr('fill', ageColor[1])
                         .attr('class', defclass)
                         .attr('id', d);
                     ageCounts[Number(data[d].age)]++;
@@ -458,13 +466,13 @@ For an A you need to add:
                 .attr('y', gendermargin.top + (gmax - maleTotal) * genderScale)
                 .attr('width', w)
                 .attr('height', maleTotal * genderScale)
-                .attr('fill', reds[4])
+                .attr('fill', ageColor[1])
                 .attr('id', 'malerect');
             gchart.append('circle')
                 .attr('cx', gendermargin.left + grectpad + w / 2)
                 .attr('cy', gendermargin.top + (gmax - maleTotal) * genderScale - 15)
                 .attr('r', '10')
-                .attr('stroke', reds[4])
+                .attr('stroke', ageColor[1])
                 .attr('fill', 'none')
                 .attr('stroke-width', '2')
                 .attr('id', 'malecir');
@@ -478,13 +486,13 @@ For an A you need to add:
                 .attr('y', gendermargin.top + (gmax - femaleTotal) * genderScale)
                 .attr('width', w)
                 .attr('height', femaleTotal * genderScale)
-                .attr('fill', reds[4])
+                .attr('fill', ageColor[1])
                 .attr('id', 'femalerect');
             gchart.append('circle')
                 .attr('cx', gendermargin.left + grectpad + w + grectpad + w / 2)
                 .attr('cy', gendermargin.top + (gmax - femaleTotal) * genderScale - 15)
                 .attr('r', '10')
-                .attr('fill', reds[4])
+                .attr('fill', ageColor[1])
                 .attr('id', 'femalecir');
             gchart.select('#femalelabel')
                 .attr('x', gendermargin.left + grectpad + w + grectpad + w / 2)
@@ -566,8 +574,8 @@ For an A you need to add:
                 }
                 else {
                     console.log("gender only");
-                    map.selectAll(".male").attr('fill', 'none').attr('stroke', reds[4]).attr('stroke-opacity', '1');
-                    map.selectAll(".female").attr('fill', reds[4]).attr('stroke-opacity', '0');
+                    map.selectAll(".male").attr('fill', 'none').attr('stroke', ageColor[1]).attr('stroke-opacity', '1');
+                    map.selectAll(".female").attr('fill', ageColor[1]).attr('stroke-opacity', '0');
                 }
             }
             else {
@@ -584,8 +592,8 @@ For an A you need to add:
                 }
                 else {
                     console.log("neither");
-                    map.selectAll(".male").attr('fill', reds[4]).attr('stroke-opacity', "0");
-                    map.selectAll(".female").attr('fill', reds[4]);
+                    map.selectAll(".male").attr('fill', ageColor[1]).attr('stroke-opacity', "0");
+                    map.selectAll(".female").attr('fill', ageColor[1]);
                 }
 
             }
@@ -654,6 +662,10 @@ For an A you need to add:
                     d3.select(this).attr("fill-opacity", "0").attr('stroke-opacity', '0');
                 }
             });
+        }
+
+        function zoom() {
+            map.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
         }
 
         d3.select("#gender").on("change", update);
