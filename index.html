@@ -317,15 +317,18 @@ X: ability to zoom in/out and pan around the map
         d3.csv("data/pumps.csv", function (data) {
             //console.log(data);
             var i = 0;
+            var rectht = 8;
+            var rectwd = 8;
             for (i = 0; i < data.length; i++) {
 
-                map.append('circle')
-                    .attr('cx', (data[i].x - xmin) * scale)
-                    .attr('cy', (data[i].y - ymin) * scale)
-                    .attr('r', '5')
+                map.append('rect')
+                    .attr('x', (data[i].x - xmin) * scale - rectwd/2)
+                    .attr('y', (data[i].y - ymin) * scale- rectht/2)
+                    .attr('width', rectwd)
+                    .attr('height', rectht)
                     .attr('fill', 'steelblue')
                     .attr('stroke', 'white')
-                    .attr('stroke-width', '1.5px');
+                    .attr('stroke-width', '1px');
             }
         });
 
