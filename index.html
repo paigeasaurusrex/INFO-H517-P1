@@ -158,7 +158,8 @@ X: ability to zoom in/out and pan around the map
     <div id="container">
         <div id="header">
             <h1>John Snow's Cholera Map: 2020</h1>
-            <a href="/download/template/24" target="_blank">download this layout</a>
+            <a href="about.pdf" target="_blank">About this Design</a>
+            <a href="YOUTUBE LINK" target="_blank">Check out a Demo!</a>
         </div>
         <div id="wrapper">
             <div id="content">
@@ -176,18 +177,7 @@ X: ability to zoom in/out and pan around the map
                     <text id="ylabel">Deaths</text>
                     <text id="mainlabel">Deaths per Day</text>
                 </svg>
-                <p>
-                    Flexbox is relatively new, but it enjoys excellent browser support today (nearly 83% of browsers support
-                    Flexbox). Flexbox Layout is used for small application components, whereas CSS Grid Layout Module is
-                    aimed to handle the large scale layouts.
-                </p>
-                <h3>The Two axes of Flexbox</h3>
-                <p>
-                    When working with flexbox you need to think in terms of two axes â the main axis and the cross axis. The
-                    main axis is defined by the flex-direction property, and the cross axis runs perpendicular to it.
-                    Everything we do with flexbox refers back to these axes, so it is worth understanding how they work from
-                    the outset.
-                </p>
+               
             </div>
         </div>
         <div id="navigation">
@@ -202,17 +192,16 @@ X: ability to zoom in/out and pan around the map
         <div id="extra">
             <p><strong><input type="checkbox" class="checkbox" id="age" value="age" unchecked><label>Display Age on Map</label></strong></p>
             <h3>Age Distribution (ranges in years)</h3>
-            <svg id="agechart" height="450" width="260" style="background-color: white; border: 1px solid black; margin: 20 20; display: inline-flex;">
+            <svg id="agechart" height="400" width="260" style="background-color: white; border: 1px solid black; margin: 20 20; display: inline-flex;">
                 <text id="ylabel">Deaths</text>
 
             </svg>
         </div>
         <div id="footer">
-            <p>Footer</p>
+            
         </div>
     </div>
     <script type="text/javascript">AddFillerLink("content", "navigation", "extra")</script>
-    <h1>Map</h1>
     
     <!--<input type="range" name="slider" id="dateSlider">-->
     
@@ -250,7 +239,7 @@ X: ability to zoom in/out and pan around the map
 
         var margin = { top: 40, right: 20, bottom: 70, left: 60 };
         var gendermargin = { top: 30, right: 10, bottom: 80, left: 30 };
-        var agemargin = { top: 30, right: 10, bottom: 80, left: 50 };
+        var agemargin = { top: 30, right: 10, bottom: 30, left: 50 };
         var maleTotal = 0;
         var femaleTotal = 0;
         var genderScale = 1.1;
@@ -352,10 +341,10 @@ X: ability to zoom in/out and pan around the map
             console.log(data);
             var chartScale = (xmax * scale + 10);
             chartHeight = map.attr('height');
-            chart.attr('width', chartScale + margin.left).attr('height', chartHeight);
+            chart.attr('width', chartScale + margin.left-40).attr('height', chartHeight);
             console.log("chartscale: " + chartScale);
-            w = chartScale / data.length - barPad;
-            console.log("w: " + w);
+            w = 15;
+            console.log("w1: " + w);
 
             var hmax = 0;
             var x = 0;
@@ -392,6 +381,8 @@ X: ability to zoom in/out and pan around the map
                         })
                         .on('mouseout', function () {
                             d3.select(this).attr('fill', 'steelblue')
+                            newEndDate = Number(d3.select(this).attr('id'));
+                            update();
                         })
                         .on('click', function (d, i) {
                             console.log('id: ' + d3.select(this).attr('id'));
@@ -410,9 +401,10 @@ X: ability to zoom in/out and pan around the map
             //Add scales to the bar chart
             var timeFormat = d3.time.format('%d-%b');
             //console.log("start date: " + timeFormat.parse(data[1].date));
+            console.log("w2: " + w);
             var xScale = d3.time.scale()
                 .domain([timeFormat.parse(data[0].date), timeFormat.parse(data[data.length - 1].date)])
-                .range([margin.left + 2 + (w / 2), chart.attr('width') - (w / 2)]);
+                .range([margin.left + 2 + (w / 2), margin.left + 2 + (data.length-1) * (w + barPad) + w/2]);//chart.attr('width') - (w / 2)]);
             var yScale = d3.scale.linear()
                 .domain([0, (chartHeight - margin.top - margin.bottom) / rectScale])
                 .range([chartHeight - margin.bottom, margin.top]);
