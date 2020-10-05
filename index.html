@@ -159,7 +159,6 @@ X: ability to zoom in/out and pan around the map
         <div id="header">
             <h1>John Snow's Cholera Map: 2020</h1>
             <a href="about.pdf" target="_blank">About this Design</a>
-            <a href="YOUTUBE LINK" target="_blank">Check out a Demo!</a>
         </div>
         <div id="wrapper">
             <div id="content">
@@ -167,7 +166,7 @@ X: ability to zoom in/out and pan around the map
                 <p>
                     Dr. John Snow's visualization of the deaths realated to the Broad Street Cholera outbreak of 1854 provided some of the most compelling
                     evidence and made the case for public health policies to improve water sanitation. The map below is an interactive recreation of the original
-                    visualization created by Dr. Snow. It can be filtered by date and show the distribuition of deaths for each gender and age range.
+                    visualization created by Dr. Snow. It can be filtered by date and show the distribuition of deaths for each gender and age range. See a demo of this visualization <a href="YOUTUBE LINK" target="_blank">here</a>.
                 </p>
                 <svg id="map" style="border: 1px solid black;transform: scale(1,-1); margin: 0 auto; display: inline-flex;">
                     <text>Brewery</text>
@@ -183,7 +182,7 @@ X: ability to zoom in/out and pan around the map
         <div id="navigation">
             <p><strong><input type="checkbox" class="checkbox" id="gender" value="gender" unchecked><label>Display Gender on Map</label></strong></p>
             <h3>Gender Distribution</h3>
-            <svg id="genderchart" height="400" width="260" style="background-color: white; border: 1px solid black; margin: 20 20; display: inline-flex;">
+            <svg id="genderchart" height="280" width="260" style="background-color: white; border: 1px solid black; margin: 20 20; display: inline-flex;">
                 <text id="ylabel">Deaths</text>
                 <text id="malelabel">Male</text>
                 <text id="femalelabel">Female</text>
@@ -192,7 +191,7 @@ X: ability to zoom in/out and pan around the map
         <div id="extra">
             <p><strong><input type="checkbox" class="checkbox" id="age" value="age" unchecked><label>Display Age on Map</label></strong></p>
             <h3>Age Distribution (ranges in years)</h3>
-            <svg id="agechart" height="400" width="260" style="background-color: white; border: 1px solid black; margin: 20 20; display: inline-flex;">
+            <svg id="agechart" height="280" width="260" style="background-color: white; border: 1px solid black; margin: 20 20; display: inline-flex;">
                 <text id="ylabel">Deaths</text>
 
             </svg>
@@ -238,11 +237,11 @@ X: ability to zoom in/out and pan around the map
         chart.attr("height", chartHeight).attr("width", imgWidth);
 
         var margin = { top: 40, right: 20, bottom: 70, left: 60 };
-        var gendermargin = { top: 30, right: 10, bottom: 80, left: 30 };
+        var gendermargin = { top: 30, right: 10, bottom: 20, left: 30 };
         var agemargin = { top: 30, right: 10, bottom: 30, left: 50 };
         var maleTotal = 0;
         var femaleTotal = 0;
-        var genderScale = 1.1;
+        var genderScale = 0.7;
         var grectpad = 40;
         var gmax = 300;
         var ageCounts = [0, 0, 0, 0, 0, 0];
